@@ -1,0 +1,13 @@
+.main{
+    display: flex;
+    margin-left:300px;
+}
+
+.form{
+    margin-left: 100px;
+}
+
+.submit{
+    margin-top: 50px;
+    margin-left: 100px;
+}

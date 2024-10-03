@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Running and Falling Animation</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .hill {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(45deg, green 50%, transparent 50%);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .car {
+      position: absolute;
+      width: 300px;
+      height: 250px;
+      margin-top: 192px;
+      left: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .input-container {
+      margin: 10px 0;
+    }
+
+    .buttons-container {
+      margin-top: 20px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="car">
+    <img id="image" src="https://t4.ftcdn.net/jpg/01/63/36/27/240_F_163362793_ivS25frlUeF2UgIpQX430ZXJEde96FCf.jpg" />
+  </div>
+  <div class="hill"></div>
+
+  <div class="controls">
+    <div class="input-container">
+      X-axis: <input type="number" id="xInput" readonly>
+      Y-axis: <input type="number" id="yInput" readonly>
+    </div>
+
+    <div class="buttons-container">
+      <button id="startBtn">Start</button>
+      <button id="stopBtn">Stop</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    const car = document.querySelector('.car');
+    const xInput = document.getElementById('xInput');
+    const yInput = document.getElementById('yInput');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let carX = 0;
+    let carY = 40; 
+    let goingDown = false;
+    let interval;
+
+    
+    function startAnimation() {
+      if (!interval) {
+        interval = setInterval(execute , 100); 
+      }
+    }
+
+    function execute(){
+          if (!goingDown) {
+            carX += 25;
+            if (carX >= 560) {  
+              goingDown = true;
+            }
+          } else {
+            carX += 12;
+            carY += 12;  
+          }
+
+          
+          car.style.left = carX + 'px';
+          car.style.top = carY + 'px';
+
+          
+          xInput.value = carX;
+          yInput.value = carY;
+
+          if(carY>40){
+            document.getElementById("image").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV_tuAcTwCqO6S10a-zpwRCU-IXrCTAsLXmA&s";
+          }
+          if (carY > 300) {
+            // document.getElementById("image").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSWK-PlzI8BK8aX1qVywpMGJmciB4pCzA8Cw&s";
+            clearInterval(interval);
+            interval = null;
+            
+          }
+        }
+
+    
+    function stopAnimation() {
+      clearInterval(interval);
+      interval = null;
+    }
+
+    
+    function resetAnimation() {
+      stopAnimation(); 
+      document.getElementById("image").src = "https://media.istockphoto.com/id/828695144/vector/red-car.jpg?s=612x612&w=0&k=20&c=W7d8bPBvykbzofyOxKebx99irfp0FoDa8EmleKR93Ok=";
+
+      carX = 0;
+      carY = 40;
+      goingDown = false;
+
+      
+      car.style.left = carX + 'px';
+      car.style.top = carY + 'px';
+
+      
+      xInput.value = carX;
+      yInput.value = carY;
+    }
+
+    
+    startBtn.addEventListener('click', startAnimation);
+    stopBtn.addEventListener('click', stopAnimation);
+    resetBtn.addEventListener('click', resetAnimation);
+
+  </script>
+
+</body>
+</html>
